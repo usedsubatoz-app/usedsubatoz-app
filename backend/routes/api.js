@@ -7,8 +7,13 @@ router.get("/users", async (req, res) => {
     const result = await pool.query("SELECT * FROM users");
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+  console.error("DB ERROR:", err);
+  res.status(500).json({
+    error: err.toString(),
+    detail: err
+  });
+}
+
 
 module.exports = router;
+
